@@ -1,0 +1,38 @@
+{
+  "name": "invoice-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ELProfessor67/freshmat-server.git"
+  },
+  "author": "zeeshan raza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ELProfessor67/freshmat-server/issues"
+  },
+  "homepage": "https://github.com/ELProfessor67/freshmat-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "datauri": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.12",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "validator": "^13.11.0"
+  }
+}
