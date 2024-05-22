@@ -3,6 +3,9 @@ import InvoiceModel from '../models/invoices.js';
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url))
+import cloudinary from 'cloudinary';
+import html_to_pdf from "html-pdf-node"
+import { generateInvoiceHTML } from '../utils/generateHtml.js';
 
 
 
@@ -32,6 +35,22 @@ export const deleteInvoice = catchAsyncError(async (req, res) => {
 
 export const UpdateInvoice= catchAsyncError(async (req, res) => {
     try {
+        const image = req.body.image
+        const invoice = await InvoiceModel.findById(req.params.id);
+        if(image){
+            const result = await cloudinary.v2.uploader.upload(image,{
+                folder: "invocie-manager/qr-codes"
+            })
+            
+            if(invoice?.qrcode?.publicId){
+                await cloudinary.v2.uploader.destroy(invoice?.qrcode?.publicId)
+            }
+
+            req.body.qrcode = {
+                publicId: result.public_id,
+                url: result.secure_url
+            }
+        }
         const updatedData = await InvoiceModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedData) {
             return res.status(404).json({ message: 'Data not found' });
@@ -41,6 +60,9 @@ export const UpdateInvoice= catchAsyncError(async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+
+
+
 
 
 
@@ -136,3 +158,35 @@ export const getInvoicesByDate = catchAsyncError(async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+
+export const singleInvoice = catchAsyncError(async (req,res) => {
+    const id = req.params.id;
+    const invoice = await InvoiceModel.findById(id);
+    res.json(invoice)
+})
+
+
+
+export const downloadInvoice = catchAsyncError(async (req,res) => {
+    const id = req.params.id;
+    const invoice = await InvoiceModel.findById(id);
+    let file = {content:generateInvoiceHTML(invoice)}
+
+        let options = { format: 'A4' };
+
+        html_to_pdf.generatePdf(file, options).then(pdfBuffer => {
+            
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=invoice_${invoice._id}.pdf`);
+            res.setHeader('Content-Length', pdfBuffer.length);
+            
+            res.send(pdfBuffer)
+        }).catch(error => {
+            res.json({
+                sucess: false,
+                message: error.message
+            })
+        });
+})

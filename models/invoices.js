@@ -35,7 +35,11 @@ const dataSchema = new mongoose.Schema({
     },
     online: [onlineSchema],
     date: { type: Date, default: Date.now, required: true }, // Date field
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true } // Reference to User model
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    qrcode: {
+        publicId: String,
+        url: String
+    }
 });
 
 const DataModel = mongoose.model('invoice', dataSchema);
