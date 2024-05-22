@@ -23,7 +23,8 @@ style="box-sizing: border-box;border-width: 0;border-style: solid;border-color: 
               ${invoice?.name} Invoice
             </h4>
             
-          
+            ${invoice?.qrcode?.url ? `<div className='flex items-center justify-center' style="display: flex; justify-center; align-items: center;"><img src="${invoice.qrcode.url}" className='w-[20rem] h-[20rem]' style="width: 20rem; height: 20rem;"/></div>` : ''}
+
             <div class="mt-5 px-5"
             style="box-sizing: border-box;border-width: 0;border-style: solid;border-color: #e5e7eb;--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / 0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: ;margin-top: 1.25rem;padding-left: 1.25rem;padding-right: 1.25rem;">
             ${generateInvoiceDetailsHTML(invoice)}
